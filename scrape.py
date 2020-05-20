@@ -7,9 +7,9 @@ import pandas as pd
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import TimeoutException
-#from selenium import webdriver
-#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -60,7 +60,10 @@ options.add_argument("--disable-extensions")
 prefs = {"profile.managed_default_content_settings.images": 2}
 options.add_experimental_option("prefs", prefs)
 
-driver = webdriver.Chrome('./driver/chromedriver', options=options)
+
+
+#driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = webdriver.Chrome('./chromedriver', options=options)
 
 timeout = 3
 
