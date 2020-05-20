@@ -27,12 +27,15 @@ data = {}
 
 soup = get_soup(base_url + '/categories')
 for category in soup.findAll('div', {'class': 'subCategory___BRUDy'}):
-    name = category.find('h3', {'class': 'subCategoryHeader___36ykD'}).text
+    header = category.find('h3', {'class': 'subCategoryHeader___36ykD'})
+    span = header.find('a',{'class':'navigation___2Efid'})
+    name = span.find('span').text
     name = name.strip()
     data[name] = {}
     sub_categories = category.find('div', {'class': 'subCategoryList___r67Qj'})
     for sub_category in sub_categories.findAll('div', {'class': 'subCategoryItem___3ksKz'}):
-        sub_category_name = sub_category.find('a', {'class': 'navigation___2Efid'}).text
+        sub_category_span = sub_category.find('a', {'class': 'navigation___2Efid'}).text
+        sub_category_name =  sub_category_span.find('span').text
         sub_category_uri = sub_category.find('a', {'class': 'navigation___2Efid'})['href']
         data[name][sub_category_name] = sub_category_uri
 
