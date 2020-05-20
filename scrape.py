@@ -26,14 +26,14 @@ def get_soup(url):
 data = {}
 
 soup = get_soup(base_url + '/categories')
-for category in soup.findAll('div', {'class': 'category-object'}):
-    name = category.find('h3', {'class': 'sub-category__header'}).text
+for category in soup.findAll('div', {'class': 'subCategory___BRUDy'}):
+    name = category.find('h3', {'class': 'subCategoryHeader___36ykD'}).text
     name = name.strip()
     data[name] = {}
-    sub_categories = category.find('div', {'class': 'sub-category-list'})
-    for sub_category in sub_categories.findAll('div', {'class': 'child-category'}):
-        sub_category_name = sub_category.find('a', {'class': 'sub-category-item'}).text
-        sub_category_uri = sub_category.find('a', {'class': 'sub-category-item'})['href']
+    sub_categories = category.find('div', {'class': 'subCategoryList___r67Qj'})
+    for sub_category in sub_categories.findAll('div', {'class': 'subCategoryItem___3ksKz'}):
+        sub_category_name = sub_category.find('a', {'class': 'navigation___2Efid'}).text
+        sub_category_uri = sub_category.find('a', {'class': 'navigation___2Efid'})['href']
         data[name][sub_category_name] = sub_category_uri
 
 def extract_company_urls_form_page():
