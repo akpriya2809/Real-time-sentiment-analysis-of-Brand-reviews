@@ -40,7 +40,8 @@ for category in soup.findAll('div', {'class': 'subCategory___BRUDy'}):
         data[name][sub_category_name] = sub_category_uri
 
 def extract_company_urls_form_page():
-    a_list = driver.find_elements_by_xpath('//a[@class="category-business-card card"]')
+    a_list = driver.find_elements_by_xpath('//a[@class="navigation___2Efid"]')
+    print(a_list)
     urls = [a.get_attribute('href') for a in a_list]
     dedup_urls = list(set(urls))
     return dedup_urls
@@ -90,6 +91,7 @@ for category in tqdm(data):
         c = 1
         while next_page:
             extracted_company_urls = extract_company_urls_form_page()
+            print("extracted_company_urls",extracted_company_urls)
             company_urls[sub_category] += extracted_company_urls
             next_page, button = go_next_page()
 
