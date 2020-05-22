@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-from tqdm import tqdm_notebook
+from tqdm import tqdm
 
 base_url = "https://trustpilot.com"
 
@@ -34,7 +34,7 @@ for category in soup.findAll('div', {'class': 'subCategory___BRUDy'}):
     data[name] = {}
     sub_categories = category.find('div', {'class': 'subCategoryList___r67Qj'})
     for sub_category in sub_categories.findAll('div', {'class': 'subCategoryItem___3ksKz'}):
-        sub_category_span = sub_category.find('a', {'class': 'navigation___2Efid'}).text
+        sub_category_span = sub_category.find('a', {'class': 'navigation___2Efid'})
         sub_category_name =  sub_category_span.find('span').text
         sub_category_uri = sub_category.find('a', {'class': 'navigation___2Efid'})['href']
         data[name][sub_category_name] = sub_category_uri
@@ -62,17 +62,18 @@ options.add_argument("--disable-extensions")
 
 prefs = {"profile.managed_default_content_settings.images": 2}
 options.add_experimental_option("prefs", prefs)
+#driver = webdriver.Chrome(chrome_options=options, executable_path=r'C:\Users\Desktop\chromedriver_win32\chromedriver.exe')
+
+driver = webdriver.Chrome(ChromeDriverManager().install(), options = options)
 
 
-
-#driver = webdriver.Chrome(ChromeDriverManager().install())
-driver = webdriver.Chrome('./chromedriver', options=options)
+#driver = webdriver.Chrome(executable_path='/Users/akankshapriya/PycharmProjects/Real-time-sentiment-analysis-of-Brand-reviews/chromedriver', options=options)
 
 timeout = 3
 
 company_urls = {}
-for category in tqdm_notebook(data):
-    for sub_category in tqdm_notebook(data[category], leave=False):
+for category in tqdm(data):
+    for sub_category in tqdm(data[category], leave=False):
         company_urls[sub_category] = []
 
         url = base_url + data[category][sub_category] + "?numberofreviews=0&timeperiod=0&status=all"
@@ -119,4 +120,4 @@ df_consolidated_data = pd.DataFrame(consolidated_data, columns=['category', 'sub
 
 df_consolidated_data.to_csv('./exports/consolidate_company_urls.csv', index=False)
 
-df_consolidated_data.head()
+#df_consolidated_data.head()
