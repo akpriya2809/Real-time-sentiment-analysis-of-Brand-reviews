@@ -90,7 +90,7 @@ for category in tqdm(data):
         c = 1
         while next_page:
             extracted_company_urls = extract_company_urls_form_page()
-
+            #print("extracted_company_urls",extracted_company_urls)
             company_urls[sub_category] += extracted_company_urls
             next_page, button = go_next_page()
 
