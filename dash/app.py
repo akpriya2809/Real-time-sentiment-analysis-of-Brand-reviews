@@ -27,10 +27,10 @@ app = dash.Dash(
     ],
     suppress_callback_exceptions=True
 )
-#
-# app.scripts.append_script({
-#     "external_url": external_script
-# })
+
+app.scripts.append_script({
+    "external_url": external_script
+})
 
 app.title = 'Reviews AI2Prod'
 

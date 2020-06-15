@@ -56,7 +56,7 @@ def predict_rating():
             review = request.form['review']
             print(review)
             output = predict_sentiment(model, review, **parameters)
-            return jsonify(float(0.75))
+            return jsonify(float(output))
 
 
 @api.route('/review', methods=['POST'])
@@ -74,10 +74,10 @@ def post_review():
             'user_agent',
             'ip_address'
         ]
-        if any(field not in request.json for field in expected_fields):
+        if any(field not in request.form for field in expected_fields):
             return jsonify({'error': 'Missing field in body'}), 400
         #print(request.json)
-        query = db.Review.create(**request.json)
+        query = db.Review.create(**request.form)
 
         return jsonify(query.serialize())
 
